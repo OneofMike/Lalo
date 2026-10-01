@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D’MopMar Cleaning</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --black:#0b0d0f;
+      --graphite:#171a1e;
+      --steel:#2a3036;
+      --blue:#2f74a8;
+      --blue2:#1d4f73;
+      --bone:#ede9df;
+      --paper:#f7f4ec;
+      --white:#fff;
+      --muted:#6c7378;
+      --line:#c9c6bd;
+    }
+
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"Inter",sans-serif;
+      background:var(--paper);
+      color:var(--black);
+      overflow-x:hidden;
+    }
+
+    a{text-decoration:none;color:inherit}
+    .wrap{width:min(1180px,calc(100% - 34px));margin:auto}
+
+    /* NAV */
+    header{
+      background:var(--black);
+      color:white;
+      border-bottom:1px solid #2a2d31;
+    }
+
+    .nav{
+      min-height:74px;
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:center;
+      gap:28px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-box{
+      width:42px;
+      height:42px;
+      border:2px solid var(--blue);
+      display:grid;
+      place-items:center;
+      font-family:"Archivo Black",sans-serif;
+      font-size:14px;
+      letter-spacing:-.5px;
+    }
+
+    .brand-name{
+      font-family:"Archivo Black",sans-serif;
+      text-transform:uppercase;
+      font-size:21px;
+      letter-spacing:-.5px;
+    }
+
+    .nav-center{
+      justify-self:center;
+      display:flex;
+      gap:24px;
+      font-family:"IBM Plex Mono",monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      color:#b7bcc0;
+    }
+
+    .nav-quote{
+      font-family:"IBM Plex Mono",monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      border:1px solid #58616a;
+      padding:11px 14px;
+    }
+
+    /* HERO */
+    .hero{
+      background:
+        linear-gradient(rgba(11,13,15,.91),rgba(11,13,15,.91)),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(255,255,255,.035) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 39px,
+          rgba(255,255,255,.035) 40px
+        );
+      color:white;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::after{
+      content:"D'MOPMAR";
+      position:absolute;
+      right:-28px;
+      top:56px;
+      writing-mode:vertical-rl;
+      transform:rotate(180deg);
+      font-family:"Archivo Black",sans-serif;
+      font-size:88px;
+      color:rgba(255,255,255,.035);
+      letter-spacing:-5px;
+      pointer-events:none;
+    }
+
+    .hero-grid{
+      min-height:720px;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:74px;
+      align-items:center;
+      position:relative;
+      z-index:2;
+    }
+
+    .tag{
+      font-family:"IBM Plex Mono",monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:1.6px;
+      color:#8eabc0;
+      margin-bottom:18px;
+    }
+
+    .hero h1{
+      font-family:"Archivo Black",sans-serif;
+      text-transform:uppercase;
+      font-size:clamp(58px,8vw,104px);
+      line-height:.86;
+      letter-spacing:-5px;
+      max-width:760px;
+      margin-bottom:30px;
+    }
+
+    .hero h1 .blue{color:#4a8cbc}
+    .hero h1 .outline{
+      color:transparent;
+      -webkit-text-stroke:1px #7d858c;
+    }
+
+    .hero-copy{
+      width:min(630px,100%);
+      color:#aeb5ba;
+      font-size:16px;
+      line-height:1.85;
+      margin-bottom:30px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      min-height:50px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 18px;
+      font-family:"IBM Plex Mono",monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.9px;
+      font-weight:600;
+    }
+
+    .btn-blue{background:var(--blue);color:white}
+    .btn-ghost{border:1px solid #525a61;color:#d7dcdf}
+
+    /* "work order" hero panel */
+    .work-order{
+      background:var(--bone);
+      color:var(--black);
+      border:1px solid #7d7a73;
+      transform:rotate(1.2deg);
+      box-shadow:18px 20px 0 rgba(0,0,0,.28);
+    }
+
+    .work-order-head{
+      border-bottom:2px solid var(--black);
+      padding:18px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+    }
+
+    .work-order-head strong{
+      font-family:"Archivo Black",sans-serif;
+      font-size:24px;
+      text-transform:uppercase;
+    }
+
+    .work-order-head span{
+      font-family:"IBM Plex Mono",monospace;
+      font-size:11px;
+      color:#575d61;
+    }
+
+    .work-body{padding:22px 20px 24px}
+
+    .order-line{
+      display:grid;
+      grid-template-columns:120px 1fr;
+      gap:16px;
+      padding:13px 0;
+      border-bottom:1px dashed #9f9b93;
+      font-family:"IBM Plex Mono",monospace;
+      font-size:12px;
+    }
+
+    .order-line:last-child{border-bottom:none}
+
+    .order-line b{
+      text-transform:uppercase;
+      color:#4d5357;
+      font-weight:600;
+    }
+
+    .stamp{
+      margin-top:26px;
+      display:inline-block;
+      border:3px solid var(--blue);
+      color:var(--blue);
+      padding:9px 12px;
+      font-family:"Archivo Black",sans-serif;
+      text-transform:uppercase;
+      transform:rotate(-4deg);
+      font-size:20px;
+      letter-spacing:.5px;
+    }
+
+    /* TICKER */
+    .ticker{
+      background:var(--blue);
+      color:white;
+      overflow:hidden;
+      border-top:1px solid #5a99c5;
+      border-bottom:1px solid #173c57;
+    }
+
+    .ticker-track{
+      min-height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:space-around;
+      gap:24px;
+      white-space:nowrap;
+      font-family:"IBM Plex Mono",monospace;
+      text-transform:uppercase;
+      letter-spacing:1.2px;
+      font-size:11px;
+      font-weight:600;
+    }
+
+    /* SECTIONS */
+    section{padding:88px 0}
+    .section-code{
+      font-family:"IBM Plex Mono",monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:1.6px;
+      color:var(--blue);
+      margin-bottom:10px;
+    }
+    .section-title{
+      font-family:"Archivo Black",sans-serif;
+      text-transform:uppercase;
+      font-size:clamp(42px,6vw,70px);
+      line-height:.95;
+      letter-spacing:-2.6px;
+    }
+
+    /* SERVICES */
+    .services{background:var(--paper)}
+    .service-grid{
+      margin-top:40px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      border-top:2px solid var(--black);
+      border-bottom:2px solid var(--black);
+    }
+
+    .service{
+      padding:28px 24px 32px;
+      border-right:1px solid #9d9c97;
+      min-height:320px;
+      position:relative;
+    }
+
+    .service:last-child{border-right:none}
+
+    .service-code{
+      font-family:"IBM Plex Mono",monospace;
+      font-size:11px;
+      color:#72787d;
+      margin-bottom:74px;
+    }
+
+    .service h3{
+      font-family:"Archivo Black",sans-serif;
+      text-transform:uppercase;
+      font-size:28px;
+      line-height:1;
+      letter-spacing:-1px;
+      margin-bottom:14px;
+    }
+
+    .service p{
+      color:#626a70;
+      font-size:14px;
+      line-height:1.75;
+      max-width:290px;
+    }
+
+    .service::after{
+      content:"";
+      position:absolute;
+      width:36px;
+      height:6px;
+      background:var(--blue);
+      top:29px;
+      right:24px;
+    }
+
+    /* ABOUT */
+    .about{
+      background:var(--graphite);
+      color:white;
+      position:relative;
+    }
+
+    .about-grid{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:70px;
+      align-items:start;
+    }
+
+    .big-mark{
+      border:1px solid #3c4146;
+      min-height:430px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:28px;
+      background:
+        linear-gradient(135deg,transparent 0 48%,rgba(255,255,255,.025) 48% 52%,transparent 52%);
+    }
+
+    .big-mark .mini{
+      font-family:"IBM Plex Mono",monospace;
+      font-size:10px;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+      color:#8a969e;
+    }
+
+    .big-mark .dm{
+      font-family:"Archivo Black",sans-serif;
+      font-size:150px;
+      line-height:.75;
+      letter-spacing:-11px;
+      color:#232a30;
+      -webkit-text-stroke:1px #56616a;
+    }
+
+    .big-mark .bottom{
+      font-family:"Archivo Black",sans-serif;
+      font-size:24px;
+      text-transform:uppercase;
+      line-height:1.05;
+      max-width:300px;
+    }
+
+    .about .section-code{color:#7da6c4}
+    .about .section-title{color:white;margin-bottom:22px}
+    .about-copy{color:#a8b0b5;line-height:1.85;margin-bottom:24px}
+
+    .fact-list{border-top:1px solid #3a4045}
+    .fact{
+      padding:18px 0;
+      border-bottom:1px solid #3a4045;
+      display:grid;
+      grid-template-columns:150px 1fr;
+      gap:25px;
+    }
+
+    .fact b{
+      font-family:"IBM Plex Mono",monospace;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      color:#7897ad;
+    }
+
+    .fact span{
+      color:#c4c9cc;
+      font-size:14px;
+    }
+
+    /* PROCESS */
+    .process{background:#d9d5ca}
+    .process-grid{
+      display:grid;
+      grid-template-columns:.75fr 1.25fr;
+      gap:66px;
+      align-items:start;
+    }
+
+    .process-note{
+      border-left:6px solid var(--blue);
+      padding:14px 0 14px 18px;
+      margin-top:24px;
+      color:#545c61;
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    .steps{border-top:2px solid var(--black)}
+    .step{
+      display:grid;
+      grid-template-columns:78px 1fr;
+      gap:20px;
+      padding:24px 0;
+      border-bottom:1px solid #a8a49a;
+      align-items:start;
+    }
+
+    .step-num{
+      font-family:"Archivo Black",sans-serif;
+      font-size:30px;
+      color:#7c7a74;
+    }
+
+    .step h3{
+      font-family:"Archivo Black",sans-serif;
+      text-transform:uppercase;
+      font-size:22px;
+      margin-bottom:6px;
+      letter-spacing:-.5px;
+    }
+
+    .step p{
+      color:#63696d;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    /* QUOTE */
+    .quote{
+      background:var(--paper);
+      border-top:1px solid #cbc7bc;
+    }
+
+    .quote-grid{
+      display:grid;
+      grid-template-columns:.8fr 1.2fr;
+      gap:60px;
+      align-items:start;
+    }
+
+    .quote-card{
+      background:var(--blue2);
+      color:white;
+      padding:28px;
+      margin-top:30px;
+    }
+
+    .quote-card small{
+      display:block;
+      font-family:"IBM Plex Mono",monospace;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-size:10px;
+      color:#b6ccdc;
+      margin-bottom:5px;
+    }
+
+    .quote-card a{
+      display:block;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    form{
+      background:#e5e1d7;
+      border:2px solid var(--black);
+      padding:28px;
+      position:relative;
+    }
+
+    form::before{
+      content:"SERVICE REQUEST / 01";
+      position:absolute;
+      top:-13px;
+      left:18px;
+      background:var(--paper);
+      padding:0 8px;
+      font-family:"IBM Plex Mono",monospace;
+      font-size:10px;
+      letter-spacing:1px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .field.full{grid-column:1/-1}
+
+    label{
+      display:block;
+      font-family:"IBM Plex Mono",monospace;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.9px;
+      font-weight:600;
+      margin-bottom:6px;
+    }
+
+    input,select,textarea{
+      width:100%;
+      border:1px solid #9a978f;
+      background:#f8f6f0;
+      padding:12px 11px;
+      border-radius:0;
+      outline:none;
+      font:inherit;
+      color:var(--black);
+    }
+
+    input:focus,select:focus,textarea:focus{border-color:var(--blue)}
+    textarea{min-height:118px;resize:vertical}
+
+    .submit{
+      width:100%;
+      min-height:52px;
+      margin-top:15px;
+      border:none;
+      background:var(--black);
+      color:white;
+      font-family:"IBM Plex Mono",monospace;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    .fine{
+      margin-top:9px;
+      font-size:10px;
+      color:#757872;
+    }
+
+    footer{
+      background:var(--black);
+      color:#9da5aa;
+      padding:26px 0;
+      border-top:1px solid #303337;
+      font-family:"IBM Plex Mono",monospace;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.7px;
+    }
+
+    .footer-row{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      align-items:center;
+    }
+
+    @media(max-width:900px){
+      .nav-center{display:none}
+      .hero-grid,.about-grid,.process-grid,.quote-grid{grid-template-columns:1fr}
+      .hero-grid{min-height:auto;padding:74px 0}
+      .work-order{transform:none;box-shadow:10px 12px 0 rgba(0,0,0,.22)}
+      .service-grid{grid-template-columns:1fr}
+      .service{border-right:none;border-bottom:1px solid #9d9c97}
+      .service:last-child{border-bottom:none}
+    }
+
+    @media(max-width:600px){
+      .wrap{width:min(100% - 26px,1180px)}
+      .nav{grid-template-columns:1fr auto}
+      .nav-quote{display:none}
+      .hero h1{font-size:56px;letter-spacing:-3.5px}
+      .hero::after{display:none}
+      section{padding:64px 0}
+      .section-title{font-size:43px;letter-spacing:-1.8px}
+      .fact{grid-template-columns:1fr;gap:6px}
+      .form-grid{grid-template-columns:1fr}
+      .field.full{grid-column:auto}
+      form{padding:22px}
+      .footer-row{display:block}
+      .footer-row div+div{margin-top:8px}
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand">
+      <div class="brand-box">DM</div>
+      <div class="brand-name">D’MopMar</div>
+    </a>
+
+    <nav class="nav-center">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#process">Process</a>
+    </nav>
+
+    <a href="#quote" class="nav-quote">Request Service</a>
+  </div>
+</header>
+
+
+<main>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+
+      <div>
+        <div class="tag">Independent Cleaning / Direct Service</div>
+
+        <h1>
+          Clean work.
+          <span class="blue">No runaround.</span>
+          <span class="outline">D’MopMar.</span>
+        </h1>
+
+        <p class="hero-copy">
+          Residential cleaning handled directly from the first message to the finished job.
+          No call center. No rotating contacts. Just a simple way to request the cleaning your space needs.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#quote" class="btn btn-blue">Request a Quote</a>
+          <a href="#services" class="btn btn-ghost">See Services</a>
+        </div>
+      </div>
+
+
+      <aside class="work-order">
+
+        <div class="work-order-head">
+          <strong>Service Card</strong>
+          <span>DM / 001</span>
+        </div>
+
+        <div class="work-body">
+
+          <div class="order-line">
+            <b>Business</b>
+            <span>D’MopMar Cleaning</span>
+          </div>
+
+          <div class="order-line">
+            <b>Contact</b>
+            <span>(919) 604-6904</span>
+          </div>
+
+          <div class="order-line">
+            <b>Email</b>
+            <span>eduardoc6972@gmail.com</span>
+          </div>
+
+          <div class="order-line">
+            <b>Booking</b>
+            <span>Direct quote request</span>
+          </div>
+
+          <div class="order-line">
+            <b>Operator</b>
+            <span>Independent / Owner-operated</span>
+          </div>
+
+          <div class="stamp">Ready To Quote</div>
+
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+
+  <div class="ticker">
+    <div class="wrap ticker-track">
+      <span>Residential Cleaning</span>
+      <span>•</span>
+      <span>Direct Communication</span>
+      <span>•</span>
+      <span>Simple Quote Requests</span>
+      <span>•</span>
+      <span>Owner-Operated Service</span>
+    </div>
+  </div>
+
+
+  <section class="services" id="services">
+    <div class="wrap">
+
+      <div class="section-code">01 / Service Menu</div>
+      <h2 class="section-title">What the job can look like.</h2>
+
+      <div class="service-grid">
+
+        <article class="service">
+          <div class="service-code">SRV-01</div>
+          <h3>Routine Cleaning</h3>
+          <p>
+            For customers who want help keeping their home consistently clean without waiting for everything to pile up.
+          </p>
+        </article>
+
+        <article class="service">
+          <div class="service-code">SRV-02</div>
+          <h3>Deep Cleaning</h3>
+          <p>
+            A more detailed reset for spaces that need extra attention, heavier buildup, or a stronger one-time clean.
+          </p>
+        </article>
+
+        <article class="service">
+          <div class="service-code">SRV-03</div>
+          <h3>Move-In / Move-Out</h3>
+          <p>
+            Cleaning support for spaces that need to be prepared before moving in or handed over after moving out.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+
+      <div class="big-mark">
+        <div class="mini">D’MopMar / Independent Cleaning</div>
+        <div class="dm">DM</div>
+        <div class="bottom">One cleaner. One point of contact.</div>
+      </div>
+
+      <div>
+        <div class="section-code">02 / The Advantage</div>
+        <h2 class="section-title">Small business works different.</h2>
+
+        <p class="about-copy">
+          D’MopMar is owner-operated. That means the customer does not have to go through an office,
+          wait for a dispatcher, or explain the same job to different people. The person you contact is the person handling the service.
+        </p>
+
+        <div class="fact-list">
+
+          <div class="fact">
+            <b>Communication</b>
+            <span>Talk directly about the space, what needs attention, and when the job needs to happen.</span>
+          </div>
+
+          <div class="fact">
+            <b>Quote Process</b>
+            <span>Send the useful details up front so the conversation starts with the information needed to price the work.</span>
+          </div>
+
+          <div class="fact">
+            <b>Service Style</b>
+            <span>Personal, direct, and built around the actual job instead of a generic call-center experience.</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="process" id="process">
+    <div class="wrap process-grid">
+
+      <div>
+        <div class="section-code">03 / Booking Flow</div>
+        <h2 class="section-title">Less back-and-forth.</h2>
+
+        <div class="process-note">
+          The website collects the important job details first, so D’MopMar receives one organized request instead of having to ask every question individually.
+        </div>
+      </div>
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-num">01</div>
+          <div>
+            <h3>Send the job details</h3>
+            <p>Choose a cleaning type, add the property size, availability, and anything important about the space.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">02</div>
+          <div>
+            <h3>Review and quote</h3>
+            <p>D’MopMar gets the information in one place and can respond with pricing or any final questions.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">03</div>
+          <div>
+            <h3>Confirm the service</h3>
+            <p>Once the details are agreed on, the cleaning can be scheduled directly.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="quote" id="quote">
+    <div class="wrap quote-grid">
+
+      <div>
+        <div class="section-code">04 / Request Service</div>
+        <h2 class="section-title">Tell me about the job.</h2>
+
+        <div class="quote-card">
+          <small>Call / Text</small>
+          <a href="tel:+19196046904">(919) 604-6904</a>
+
+          <small>Email</small>
+          <a href="mailto:eduardoc6972@gmail.com">eduardoc6972@gmail.com</a>
+        </div>
+      </div>
+
+
+      <form id="quoteForm">
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="name">Customer Name</label>
+            <input id="name" type="text" required>
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" type="tel" required>
+          </div>
+
+          <div class="field full">
+            <label for="email">Email</label>
+            <input id="email" type="email">
+          </div>
+
+          <div class="field">
+            <label for="service">Service Type</label>
+            <select id="service">
+              <option>Routine Cleaning</option>
+              <option>Deep Cleaning</option>
+              <option>Move-In / Move-Out Cleaning</option>
+              <option>Not Sure Yet</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="size">Property Size</label>
+            <input id="size" type="text" placeholder="Example: 2 bed / 2 bath">
+          </div>
+
+          <div class="field full">
+            <label for="availability">Preferred Availability</label>
+            <input id="availability" type="text" placeholder="Example: Friday afternoon">
+          </div>
+
+          <div class="field full">
+            <label for="details">Job Notes</label>
+            <textarea id="details" placeholder="Anything else D’MopMar should know about the space?"></textarea>
+          </div>
+
+        </div>
+
+        <button type="submit" class="submit">Send Quote Request</button>
+        <div class="fine">Your information is used only to respond to this cleaning request.</div>
+
+      </form>
+
+    </div>
+  </section>
+
+</main>
+
+
+<footer>
+  <div class="wrap footer-row">
+    <div>D’MopMar Cleaning / Owner-Operated</div>
+    <div>© 2026 D’MopMar</div>
+  </div>
+</footer>
+
+
+<script>
+document.getElementById("quoteForm").addEventListener("submit", function(event){
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const email = document.getElementById("email").value;
+  const service = document.getElementById("service").value;
+  const size = document.getElementById("size").value;
+  const availability = document.getElementById("availability").value;
+  const details = document.getElementById("details").value;
+
+  const message =
+`Hi D'MopMar, I'd like to request a cleaning quote.
+
+Name: ${name}
+Phone: ${phone}
+Email: ${email || "Not provided"}
+Service: ${service}
+Property Size: ${size || "Not provided"}
+Preferred Availability: ${availability || "Not provided"}
+
+Job Notes:
+${details || "None provided"}`;
+
+  window.location.href =
+    `sms:+19196046904?&body=${encodeURIComponent(message)}`;
+});
+</script>
+
+</body>
+</html>
